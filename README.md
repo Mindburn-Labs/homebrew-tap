@@ -30,16 +30,14 @@ The formula name is `helm` because the public HELM OSS quickstart uses `helm`.
 This can conflict with Kubernetes Helm, which also uses the `helm` formula and
 binary name in Homebrew core.
 
-The intended public namespace remains:
+The primary public namespace is:
 
 ```sh
-brew install mindburn/tap/helm
+brew install mindburnlabs/tap/helm
 ```
 
-That path requires the GitHub repository `mindburn/homebrew-tap`. Homebrew maps
-repositories named `homebrew-*` to short tap names, so `mindburn/homebrew-tap`
-becomes `mindburn/tap`. Until that repository is available under the `mindburn`
-GitHub user, this org tap provides the working install paths:
+That path is backed by `mindburnlabs/homebrew-tap`. This organization tap also
+remains available through:
 
 ```sh
 brew install Mindburn-Labs/homebrew-tap/helm
