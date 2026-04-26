@@ -1,10 +1,57 @@
-# Mindburn-Labs Tap
+# Mindburn Labs Homebrew Tap
 
-## How do I install these formulae?
+Formulae for Mindburn Labs command-line tools.
 
-`brew install mindburn-labs/tap/<formula>`
+## Install HELM OSS
 
-Or `brew tap mindburn-labs/tap` and then `brew install <formula>`.
+```sh
+brew install mindburn-labs/tap/helm
+```
+
+Then run:
+
+```sh
+helm serve --policy ./release.high_risk.v3.toml
+```
+
+This installs the HELM OSS boundary CLI from the release binaries published at:
+
+https://github.com/Mindburn-Labs/helm-oss/releases
+
+## Notes
+
+The formula name is `helm` because the public HELM OSS quickstart uses `helm`.
+This can conflict with Kubernetes Helm, which also uses the `helm` formula and
+binary name in Homebrew core.
+
+The intended public namespace remains:
+
+```sh
+brew install mindburn/tap/helm
+```
+
+That path requires the GitHub repository `mindburn/homebrew-tap`. Until that
+repository is available under the `mindburn` GitHub user, this org tap provides
+the working install path:
+
+```sh
+brew install mindburn-labs/tap/helm
+```
+
+## Other Formulae
+
+Use:
+
+```sh
+brew install mindburn-labs/tap/<formula>
+```
+
+Or:
+
+```sh
+brew tap mindburn-labs/tap
+brew install <formula>
+```
 
 Or, in a `brew bundle` `Brewfile`:
 
