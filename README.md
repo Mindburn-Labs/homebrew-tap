@@ -5,6 +5,12 @@ Formulae for Mindburn Labs command-line tools.
 ## Install HELM OSS
 
 ```sh
+brew install Mindburn-Labs/homebrew-tap/helm
+```
+
+The short alias also works:
+
+```sh
 brew install mindburn-labs/tap/helm
 ```
 
@@ -30,11 +36,13 @@ The intended public namespace remains:
 brew install mindburn/tap/helm
 ```
 
-That path requires the GitHub repository `mindburn/homebrew-tap`. Until that
-repository is available under the `mindburn` GitHub user, this org tap provides
-the working install path:
+That path requires the GitHub repository `mindburn/homebrew-tap`. Homebrew maps
+repositories named `homebrew-*` to short tap names, so `mindburn/homebrew-tap`
+becomes `mindburn/tap`. Until that repository is available under the `mindburn`
+GitHub user, this org tap provides the working install paths:
 
 ```sh
+brew install Mindburn-Labs/homebrew-tap/helm
 brew install mindburn-labs/tap/helm
 ```
 
@@ -43,6 +51,7 @@ brew install mindburn-labs/tap/helm
 Use:
 
 ```sh
+brew install Mindburn-Labs/homebrew-tap/<formula>
 brew install mindburn-labs/tap/<formula>
 ```
 
