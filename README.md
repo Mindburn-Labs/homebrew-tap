@@ -4,14 +4,20 @@ Formulae for Mindburn Labs command-line tools.
 
 ## Install HELM OSS
 
+The canonical tap for HELM OSS has moved.
+
+Please use the public `mindburnlabs` organization tap:
+
 ```sh
-brew install Mindburn-Labs/homebrew-tap/helm
+brew install mindburnlabs/tap/helm
 ```
 
-The short alias also works:
+If you previously installed from this legacy tap, please switch:
 
 ```sh
-brew install mindburn-labs/tap/helm
+brew uninstall Mindburn-Labs/homebrew-tap/helm
+brew untap Mindburn-Labs/homebrew-tap
+brew install mindburnlabs/tap/helm
 ```
 
 Then run:
@@ -20,53 +26,6 @@ Then run:
 helm serve --policy ./release.high_risk.v3.toml
 ```
 
-This installs the HELM OSS boundary CLI from the release binaries published at:
+This installs the HELM OSS boundary CLI from release binaries published at:
 
 https://github.com/Mindburn-Labs/helm-oss/releases
-
-## Notes
-
-The formula name is `helm` because the public HELM OSS quickstart uses `helm`.
-This can conflict with Kubernetes Helm, which also uses the `helm` formula and
-binary name in Homebrew core.
-
-The primary public namespace is:
-
-```sh
-brew install mindburnlabs/tap/helm
-```
-
-That path is backed by `mindburnlabs/homebrew-tap`. This organization tap also
-remains available through:
-
-```sh
-brew install Mindburn-Labs/homebrew-tap/helm
-brew install mindburn-labs/tap/helm
-```
-
-## Other Formulae
-
-Use:
-
-```sh
-brew install Mindburn-Labs/homebrew-tap/<formula>
-brew install mindburn-labs/tap/<formula>
-```
-
-Or:
-
-```sh
-brew tap mindburn-labs/tap
-brew install <formula>
-```
-
-Or, in a `brew bundle` `Brewfile`:
-
-```ruby
-tap "mindburn-labs/tap"
-brew "<formula>"
-```
-
-## Documentation
-
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
