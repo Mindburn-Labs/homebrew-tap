@@ -19,7 +19,7 @@ helm-ai-enterprise version
 helm-ai-enterprise doctor
 ```
 
-## Legacy HELM OSS Formula
+## Legacy HELM AI Kernel Formula
 
 `Formula/helm.rb` is preserved for existing users of the legacy OSS formula.
 The canonical public OSS tap has moved to the `mindburnlabs` organization tap:
