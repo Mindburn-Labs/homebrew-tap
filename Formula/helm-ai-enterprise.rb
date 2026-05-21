@@ -7,7 +7,7 @@
 
 class HelmAiEnterprise < Formula
   desc "Company AI OS built on HELM AI Kernel"
-  homepage "https://github.com/Mindburn-Labs/helm-ai-enterprise"
+  homepage "https://helm.docs.mindburn.org/helm-ai-enterprise"
   license "Apache-2.0"
   head "https://github.com/Mindburn-Labs/helm-ai-enterprise.git", branch: "main"
 
@@ -19,6 +19,6 @@ class HelmAiEnterprise < Formula
 
   test do
     assert_match "v", shell_output("#{bin}/helm-ai-enterprise version")
-    assert_match "OK", shell_output("#{bin}/helm-ai-enterprise doctor 2>&1", 0).lines.first
+    assert_match "OK", shell_output("#{bin}/helm-ai-enterprise doctor 2>&1").lines.first
   end
 end
