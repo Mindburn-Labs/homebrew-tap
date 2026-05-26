@@ -16,6 +16,21 @@ Serves as a dedicated microservice layer responsible for 'homebrew-tap' computat
 
 ---
 
+
+
+### 1.1 System Topology & Data Flow
+```mermaid
+graph TD
+    %% Styling and Colors
+    classDef box fill:#06201b,stroke:#34d399,stroke-width:2px,color:#f8fafc;
+
+    Client["Client / Platform Console"] -->|1. Request API| Controller["homebrew-tap"]
+    Controller -->|2. Authorize Action| Policies["OPA / Kyverno Policies"]
+    Controller -->|3. Record Event| DataPlane["svc-helm-data-plane"]
+    DataPlane -->|4. Generate Proof Receipt| Notary["svc-titan-proofd"]
+
+    class Client,Controller,Policies,DataPlane,Notary box;
+```
 ## 2. Directory Layout & Key Components
 Below is the verified structural topology of the repository:
 ```text
