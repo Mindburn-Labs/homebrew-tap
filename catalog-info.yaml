@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: homebrew-tap
+  description: "Governance definition for homebrew-tap"
+  annotations:
+    mindburn.org/project-tier: service
+spec:
+  type: service
+  lifecycle: production
+  owner: architecture-platform
