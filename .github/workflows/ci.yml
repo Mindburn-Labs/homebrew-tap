@@ -10,4 +10,50 @@ on:
 
 jobs:
   preflight-checks:
-    uses: Mindburn-Labs/platform-actions/.github/workflows/agent-preflight.yml@c21903fbf6f885c826c69a736229b1a8415e30c1
+    name: Agent contract and focused gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          fetch-depth: 0
+
+      - name: Verify CodeGraph hygiene
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files | grep -q '^\.codegraph/'; then
+            echo "::error::.codegraph/ must not be committed"
+            exit 1
+          fi
+
+      - name: Validate agent.yaml contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          text = Path("agent.yaml").read_text(encoding="utf-8")
+          required = ["repo_type:", "owners:", "commands:", "risk:", "agent_entrypoints:"]
+          missing = [key[:-1] for key in required if key not in text]
+          if missing:
+              raise SystemExit(f"agent.yaml missing canonical keys: {', '.join(missing)}")
+          PY
+
+      - name: Run focused repository gates
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          has_target() {
+            make -qp 2>/dev/null | awk -F: '/^[A-Za-z0-9_.-]+:([^=]|$)/ {print $1}' | grep -qx "$1"
+          }
+
+          for target in setup lint test build; do
+            if has_target "$target"; then
+              make "$target"
+            else
+              echo "::notice::No Makefile target '$target' in this repository"
+            fi
+          done
