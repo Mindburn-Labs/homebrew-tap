@@ -7,7 +7,7 @@
 
 class HelmAiEnterprise < Formula
   desc "Company AI OS built on HELM AI Kernel"
-  homepage "https://helm.docs.app-mindburn-web.org/helm-ai-enterprise"
+  homepage "https://github.com/Mindburn-Labs/helm-ai-enterprise"
   license "Apache-2.0"
   head "https://github.com/Mindburn-Labs/helm-ai-enterprise.git", branch: "main"
 
