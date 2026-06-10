@@ -3,32 +3,32 @@
 class HelmAiKernel < Formula
   desc "Fail-closed execution firewall for AI agents"
   homepage "https://github.com/Mindburn-Labs/helm-ai-kernel"
-  version "0.5.6"
+  version "0.5.10"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.6/helm-ai-kernel-darwin-arm64"
-      sha256 "497ae1e251af0364cd0453c8da8706ffcc918291ba666eeaad46677757a72647"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.10/helm-ai-kernel-darwin-arm64"
+      sha256 "cc339ce7ba05c4b48fe2cd49c0575b73c092222862f54ba7af9ef62bd0545c98"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.6/helm-ai-kernel-darwin-amd64"
-      sha256 "9c0ae72db94cb84aa35472bcb5f601945cd4038267ddb48772df71751224833a"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.10/helm-ai-kernel-darwin-amd64"
+      sha256 "4492075bc68359c3e45ea94c27d4e452e07a936ff9bfb11819ae261d2c27b0fa"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.6/helm-ai-kernel-linux-arm64"
-      sha256 "13d5503e42f8ff53499426076c74e3470c9934c436338e25f41296e3cde9d6ed"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.10/helm-ai-kernel-linux-arm64"
+      sha256 "725d30fbd20b0bfd29fe3161385181c4c4e0d1780dd149487bc3e7604a292619"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.6/helm-ai-kernel-linux-amd64"
-      sha256 "7b76d563e2a9cfb1e8331ee6f1f8fdb2ac14f273ee062360d8ef267467d9a892"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.10/helm-ai-kernel-linux-amd64"
+      sha256 "4612d14e2a211becd1062cceb6216b71cf9aa0c52e49f6a398610a420738c0fd"
     end
   end
 
   resource "launchpad-data" do
-    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.6/helm-ai-kernel-launchpad-data.tar"
-    sha256 "603c4d85d1d87a0b154a7265860bb5da97fb4c9446b1aad7cf0a0a7c8ad5aee4"
+    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.10/helm-ai-kernel-launchpad-data.tar"
+    sha256 "1b60ec5d35ba0eb21db09ccd231f967aef5add49abb4d73f13683d31d54b6cd4"
   end
 
   def install
