@@ -6,11 +6,6 @@ class HelmAiKernel < Formula
   version "0.5.11"
   license "Apache-2.0"
 
-  resource "launchpad-data" do
-    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.11/helm-ai-kernel-launchpad-data.tar"
-    sha256 "36700b968c422823e936b65424aceff54f8435c34bf246e7d1d432d653176679"
-  end
-
   on_macos do
     if Hardware::CPU.arm?
       url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.11/helm-ai-kernel-darwin-arm64"
@@ -29,6 +24,11 @@ class HelmAiKernel < Formula
       url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.11/helm-ai-kernel-linux-amd64"
       sha256 "deb75e35507d703e56bc192168e4a5220494e308b693997bcd0f302a85d36982"
     end
+  end
+
+  resource "launchpad-data" do
+    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.11/helm-ai-kernel-launchpad-data.tar"
+    sha256 "36700b968c422823e936b65424aceff54f8435c34bf246e7d1d432d653176679"
   end
 
   def install
