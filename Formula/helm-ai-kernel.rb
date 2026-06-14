@@ -3,38 +3,38 @@
   class HelmAiKernel < Formula
     desc "Fail-closed execution firewall for AI agents"
     homepage "https://github.com/Mindburn-Labs/helm-ai-kernel"
-    version "0.5.13"
+    version "0.5.14"
     license "Apache-2.0"
 
     resource "launchpad-data" do
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.13/helm-ai-kernel-launchpad-data.tar"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.14/helm-ai-kernel-launchpad-data.tar"
       sha256 "38de3dbcb9d8f9b945ea120c460f0e5f3c5c98cb7930b250d1d53f38ab688967"
     end
 
 
     resource "console-web" do
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.13/helm-console-web-v0.5.13.tar.gz"
-      sha256 "c6e06b1ea907eee94194a5681cdf7b158067d349e14da9e5538b9db69f996c28"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.14/helm-console-web-v0.5.14.tar.gz"
+      sha256 "6058d6025d7ddab3ae73fa5278059db81ec324ee4904941e663a8266e02a4473"
     end
 
 
     on_macos do
       if Hardware::CPU.arm?
-        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.13/helm-ai-kernel-darwin-arm64"
-        sha256 "340c52cc21edaa8fe3256b2e7380c43c2a0421085f62e47c0f024580e471c1fb"
+        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.14/helm-ai-kernel-darwin-arm64"
+        sha256 "84c1e5415076fb1cd5a50aa1d66f8890142807016dd90f759da0daf5f6aeed71"
       else
-        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.13/helm-ai-kernel-darwin-amd64"
-        sha256 "2ce756555c59e261e3cf0c8c7dc6a4e6dbac51dda3dbe53591e16fd21f4c0498"
+        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.14/helm-ai-kernel-darwin-amd64"
+        sha256 "1c1f6147bfa4c8ee97d2c07854be42e481ff438eadf2e71e5c70336207d74db1"
       end
     end
 
     on_linux do
       if Hardware::CPU.arm?
-        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.13/helm-ai-kernel-linux-arm64"
-        sha256 "543c42cf90f1bdda37fa93dc7adc10c851160be1f47293913ab98dfa8289e31e"
+        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.14/helm-ai-kernel-linux-arm64"
+        sha256 "8aa18560858bb63f5dde2f90d58c3414c239bbc986024a7201184b52bc5176f0"
       else
-        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.13/helm-ai-kernel-linux-amd64"
-        sha256 "4fcaf97e9f53d54fabcd60b476823498f522cd43d3be05cab120a50e7e8bdae2"
+        url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.14/helm-ai-kernel-linux-amd64"
+        sha256 "36c870c9a5557df6dea046204460314e8dccd44421565bdeba49d190600e0845"
       end
     end
 
