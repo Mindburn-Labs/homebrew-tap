@@ -1,7 +1,7 @@
 # homebrew-tap
 
 > [!WARNING]
-> **Ecosystem Boundary**: This repository is classified strictly as a **Non-HELM system**. It is decoupled from the HELM cryptographic verification core and serves Pilot or Titan product layers.
+> **Ecosystem Boundary**: This repository is classified strictly as a **Non-HELM system**. It is decoupled from the HELM cryptographic verification core.
 
 ## 1. System Overview & Purpose
 `homebrew-tap` is a production-grade component of **Mindburn Labs** representing a dedicated layer inside our sovereign microservice architecture.
@@ -27,7 +27,7 @@ graph TD
     Client["Client / Platform Console"] -->|1. Request API| Controller["homebrew-tap"]
     Controller -->|2. Authorize Action| Policies["OPA / Kyverno Policies"]
     Controller -->|3. Record Event| DataPlane["svc-helm-data-plane"]
-    DataPlane -->|4. Generate Proof Receipt| Notary["svc-titan-proofd"]
+    DataPlane -->|4. Generate Proof Receipt| Notary["HELM Notary"]
 
     class Client,Controller,Policies,DataPlane,Notary box;
 ```
