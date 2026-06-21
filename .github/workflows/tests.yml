@@ -47,7 +47,7 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          set -euo pipefail
+          set -eu
           git fetch --no-tags --depth=1 origin "$BASE_SHA"
           formula_files="$(git diff --name-only "$BASE_SHA"...HEAD | grep -E '^Formula/.*\.rb$' || true)"
           if [ "$formula_files" = "Formula/helm-ai-enterprise.rb" ]; then
