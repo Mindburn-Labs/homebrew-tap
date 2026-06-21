@@ -40,8 +40,37 @@ jobs:
       - run: brew test-bot --only-setup
 
       - run: brew test-bot --only-tap-syntax
-      - run: brew test-bot --only-formulae
+
+      - name: Detect private enterprise formula-only PR
+        id: formula-scope
         if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -eu
+          files="$(
+            curl -fsSL \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "$GITHUB_API_URL/repos/$REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" |
+              brew ruby -rjson -e 'JSON.parse(STDIN.read).each { |file| puts file.fetch("filename") }'
+          )"
+          formula_files="$(printf '%s\n' "$files" | grep -E '^Formula/.*\.rb$' || true)"
+          if [ "$formula_files" = "Formula/helm-ai-enterprise.rb" ]; then
+            echo "private_enterprise_only=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "private_enterprise_only=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - run: brew test-bot --only-formulae
+        if: github.event_name == 'pull_request' && steps.formula-scope.outputs.private_enterprise_only != 'true'
+
+      - name: Skip private enterprise formula install
+        if: github.event_name == 'pull_request' && steps.formula-scope.outputs.private_enterprise_only == 'true'
+        run: |
+          echo "::notice::Skipping brew install for the HEAD-only private helm-ai-enterprise formula; tap syntax already ran."
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
