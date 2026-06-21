@@ -55,7 +55,7 @@ jobs:
               -H "Authorization: Bearer $GH_TOKEN" \
               -H "Accept: application/vnd.github+json" \
               "$GITHUB_API_URL/repos/$REPOSITORY/pulls/$PR_NUMBER/files?per_page=100" |
-              ruby -rjson -e 'JSON.parse(STDIN.read).each { |file| puts file.fetch("filename") }'
+              brew ruby -rjson -e 'JSON.parse(STDIN.read).each { |file| puts file.fetch("filename") }'
           )"
           formula_files="$(printf '%s\n' "$files" | grep -E '^Formula/.*\.rb$' || true)"
           if [ "$formula_files" = "Formula/helm-ai-enterprise.rb" ]; then
