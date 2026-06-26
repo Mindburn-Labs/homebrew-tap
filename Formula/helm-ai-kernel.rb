@@ -31,11 +31,6 @@ class HelmAiKernel < Formula
     sha256 "38de3dbcb9d8f9b945ea120c460f0e5f3c5c98cb7930b250d1d53f38ab688967"
   end
 
-  resource "console-web" do
-    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.18/helm-console-web-v0.5.18.tar.gz"
-    sha256 "791aa544500d387c38de37e627b22782d542b7323226aced156041bd2e37fce4"
-  end
-
   def install
     binary = Dir["helm-ai-kernel-*"].first || "helm-ai-kernel"
     bin.install binary => "helm-ai-kernel"
@@ -43,15 +38,10 @@ class HelmAiKernel < Formula
       pkgshare.install "registry"
       pkgshare.install "policies"
     end
-
-    resource("console-web").stage do
-      (pkgshare/"console").install Dir["*"]
-    end
   end
 
   test do
     assert_match version.to_s, shell_output("#{bin}/helm-ai-kernel version 2>&1")
     assert_match "openclaw", shell_output("#{bin}/helm-ai-kernel launch matrix --json")
-    assert_path_exists pkgshare/"console/index.html" if resources.map(&:name).include?("console-web")
   end
 end

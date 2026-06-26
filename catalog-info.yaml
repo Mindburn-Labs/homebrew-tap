@@ -4,7 +4,7 @@ metadata:
   name: homebrew-tap
   description: "Governance definition for homebrew-tap"
   annotations:
-    app-mindburn-web.org/project-tier: service
+    mindburn.org/project-tier: service
 spec:
   type: service
   lifecycle: production
