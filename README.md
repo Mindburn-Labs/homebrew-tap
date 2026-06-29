@@ -1,129 +1,102 @@
 # homebrew-tap
 
-> [!WARNING]
-> **Ecosystem Boundary**: This repository is classified strictly as a **Non-HELM system**. It is decoupled from the HELM cryptographic verification core and serves Pilot or Titan product layers.
+Homebrew tap for [Mindburn Labs](https://mindburn.org) HELM command-line tools.
+Provides formulae to install the HELM AI Kernel and HELM AI Enterprise binaries
+via `brew`.
 
-## 1. System Overview & Purpose
-`homebrew-tap` is a production-grade component of **Mindburn Labs** representing a dedicated layer inside our sovereign microservice architecture.
+HELM is a fail-closed execution firewall for AI agents.
 
-Serves as a dedicated microservice layer responsible for 'homebrew-tap' computations, processing inputs cleanly, enforcing state invariants, and outputting audited telemetries.
-
-### Technical Taxonomy: **Decoupled Services**
-*   **Language Stack:** Text
-*   **Build & CodeGen Toolchain:** Static Manifests
-*   **Containerization:** N/A
-*   **Security Baseline:** Enforced (Push Protection, Dependabot Monthly Sweeps, Vulnerability Alerts)
-
----
-
-
-
-### 1.1 System Topology & Data Flow
-```mermaid
-graph TD
-    %% Styling and Colors
-    classDef box fill:#06201b,stroke:#34d399,stroke-width:2px,color:#f8fafc;
-
-    Client["Client / Platform Console"] -->|1. Request API| Controller["homebrew-tap"]
-    Controller -->|2. Authorize Action| Policies["OPA / Kyverno Policies"]
-    Controller -->|3. Record Event| DataPlane["svc-helm-data-plane"]
-    DataPlane -->|4. Generate Proof Receipt| Notary["svc-titan-proofd"]
-
-    class Client,Controller,Policies,DataPlane,Notary box;
-```
-## 2. Directory Layout & Key Components
-Below is the verified structural topology of the repository:
-```text
-.
-├── .github/              # Workflow definitions and default org actions
-├── .devcontainer/        # Ephemeral sandbox configuration for AI agents and devs
-├── docs/                 # Architectural Decision Records (ADRs) and runbooks
-├── observability/        # SLO configurations, custom metrics, and alert rules
-├── CODEOWNERS            # Explicit team ownership definitions
-├── SECURITY.md           # Responsible vulnerability disclosure policy
-├── renovate.json         # Monthly dependency drift manager rules
-├── agent.yaml            # Declarative execution constraints and entrypoints for AI agents
-└── AGENTS.md             # Autonomous engineering directives and test runner indices
-```
-
----
-
-## 3. Getting Started & Toolchain
-We enforce reproducible development. Ensure you run commands inside the standard devcontainer sandbox environment.
-
-### Prerequisites
-*   Git (authenticated using standard OIDC keyring)
-*   Text toolchain (or equivalent Docker daemon if building containers)
-
-### Standard Development Steps
-To bootstrap, compile, verify, and run compliance validation locally, execute the following commands:
+## Install
 
 ```bash
-# 1. Setup and restore dependencies
-# Restore dependencies
-make setup 2>/dev/null || echo "No setup required"
-
-# 2. Static compilation and code-generation
-# Compile target codebase
-make build 2>/dev/null || echo "No build required"
-
-# 3. Code formatting, compliance check, and linting
-# Run static analysis & typecheck
-make lint 2>/dev/null || echo "No lint rules"
-
-# 4. Local testing and assertion validations
-# Run assertions & unit tests
-make test 2>/dev/null || echo "No test target"
+brew tap Mindburn-Labs/tap
+brew install helm-ai-kernel
 ```
 
----
+`brew tap Mindburn-Labs/tap` adds this repository (`Mindburn-Labs/homebrew-tap`)
+as a tap; the formulae then resolve as `Mindburn-Labs/tap/<formula>`.
 
-## 4. Production Observability & Telemetry
+### Formulae
 
-#### Local Observability Diagnostics
-*   **Prometheus Scrape Endpoint:** `http://localhost:2112/metrics` (Default Prometheus exposition format)
-*   **OTel Collector Target:** `http://localhost:4317` (gRPC) or `http://localhost:4318` (HTTP/JSON)
-*   **Health & Readiness SLO Probe:** `GET http://localhost:8080/healthz` or `GET http://localhost:8080/readyz`
+| Formula | Source repo | Install kind |
+| --- | --- | --- |
+| `helm-ai-kernel` | [`Mindburn-Labs/helm-ai-kernel`](https://github.com/Mindburn-Labs/helm-ai-kernel) | Versioned — downloads the prebuilt release binary for your platform (macOS/Linux, arm64/amd64) |
+| `helm-ai-enterprise` | [`Mindburn-Labs/helm-ai-enterprise`](https://github.com/Mindburn-Labs/helm-ai-enterprise) | HEAD-only — builds from source with the Go toolchain (`go build ./apps/helm-ai-enterprise`) |
 
-High reliability requires comprehensive, zero-bias monitoring. This repository incorporates standard OTel metrics and tracing:
-*   **Metrics Scraper:** Exposes Prometheus scrape metrics tracking `resource usage, active enclaves, transaction throughput`.
-*   **Tracing Engine:** Injects standard OpenTelemetry propagation headers across downstream boundaries.
-*   **Custom Alerting SLOs:** Located in `observability/alerts.yaml`, raising automated alerts if system availability drops below **99.9%** or error-rate thresholds are violated over a sliding 5-minute interval.
+```bash
+# HELM AI Kernel (open source, Apache-2.0)
+brew install helm-ai-kernel
+helm-ai-kernel version
 
----
+# HELM AI Enterprise (builds the latest main branch from source)
+brew install --HEAD helm-ai-enterprise
+```
 
-## 5. Rollback & Disaster Recovery (Rollback Class R1)
-We enforce deterministic rollback guidelines tailored to each component's state and risk tier.
+`helm-ai-enterprise` is HEAD-only until the first `helm-ai-enterprise` GitHub
+release publishes platform binaries and `SHA256SUMS.txt`; it requires a Go build
+toolchain (`brew install go`, declared as a build dependency).
 
-### **Rollback Class R1 Protocol**
-*   **Details:** Stateless microservice. Rollbacks are managed via K8s blue-green deployments or container image digest bumps.
-*   **Mean Time to Restore (MTTR):** Target < 3 minutes under standard stateless rollbacks.
-*   **Incident Runbook:**
-    1.  Inspect active OTel trace IDs to isolate fault signatures.
-    2.  Check K8s deployment statuses or tag deployments inside Argo CD in the GitOps control plane.
-    3.  If stateful migration rollback is blocked, initiate the approved **Forward-Fix** pipeline rather than attempting destructive data reversals.
+## Repository layout
 
----
+```text
+.
+├── Formula/                  # Homebrew formulae
+│   ├── helm-ai-kernel.rb      # versioned release-binary formula
+│   └── helm-ai-enterprise.rb  # HEAD-only source-build formula
+├── .github/workflows/        # CI: test-bot, pr-pull, agent gates
+│   ├── tests.yml              # brew test-bot (tap syntax, formulae, bottles)
+│   ├── publish.yml            # brew pr-pull (merge bottles on the pr-pull label)
+│   └── ci.yml                 # agent.yaml contract + repository gates
+├── docs/                     # runbook + ADRs
+├── observability/            # alert rule definitions
+├── Makefile                  # repo gate targets (setup/test/lint/build)
+├── agent.yaml                # agent contract (repo type, owners, commands)
+├── AGENTS.md                 # agent operational guidelines
+├── CODEOWNERS                # ownership
+├── SECURITY.md               # vulnerability disclosure
+└── renovate.json             # dependency update config
+```
 
-## 6. Secure SDLC & Least Privilege
+## Formula maintenance
 
-#### OIDC Pipeline Authentication
-This repository authenticates to cloud infrastructure using passwordless OpenID Connect (OIDC) tokens.
-*   **Audience Mapping:** `https://github.com/Mindburn-Labs`
-*   **Required GitHub Workflow Scopes:**
-    ```yaml
-    permissions:
-      id-token: write   # Required for requesting the JWT OIDC token
-      contents: read    # Required for checkout
-    ```
-*   **Target Cloud IAM Role Variable:** `${{ secrets.GH_ACTIONS_OIDC_ROLE_ARN }}`
+### Updating `helm-ai-kernel`
 
-*   **OIDC Token Federation:** Direct, passwordless OpenID Connect federation is used for container publishing and cloud deployments.
-*   **Zero Static Keys:** Storing long-lived cloud credentials or environment tokens in repository variables is **strictly forbidden**. All secrets must route dynamically through secure cloud brokers or HashiCorp Vault.
-*   **Automated Updates:** Dependabot / Renovate scans execute monthly to bump minor and patch variations, eliminating package drift.
+`Formula/helm-ai-kernel.rb` pins a `version` and four release-binary `url` +
+`sha256` pairs (macOS/Linux × arm64/amd64), plus a `launchpad-data` resource.
+To bump it for a new `helm-ai-kernel` release, update the `version`, the release
+download URLs, and each `sha256` to match the published release artifacts.
 
----
+### CI and bottle publishing
 
-## 7. Licensing & Security Contact
-*   **License:** Proprietary. All rights reserved.
-*   **Security Disclosures:** Please report potential vulnerabilities via the instructions in [SECURITY.md](SECURITY.md).
+- **`tests.yml`** runs `brew test-bot` on every push and pull request across
+  `macos-15-intel`, `macos-26`, and the `ghcr.io/homebrew/brew:main` Ubuntu
+  container. It runs `--only-tap-syntax` and `--only-formulae`, and uploads the
+  built bottles as artifacts. A PR that touches **only**
+  `Formula/helm-ai-enterprise.rb` skips the `brew install` step, because that
+  formula is HEAD-only.
+- **`publish.yml`** runs `brew pr-pull` when a maintainer adds the `pr-pull`
+  label to a PR. It pulls the bottle artifacts, pushes the resulting commits to
+  `main`, and deletes the PR branch (for non-fork PRs).
+- **`ci.yml`** validates `agent.yaml` against its canonical keys, enforces that
+  `.codegraph/` is never committed, and runs the available `make` gate targets
+  (`setup`, `lint`, `test`, `build`).
+
+### Local validation
+
+```bash
+brew tap Mindburn-Labs/tap
+brew audit --strict --tap Mindburn-Labs/tap   # lint the formulae
+brew install --build-from-source helm-ai-kernel
+brew test helm-ai-kernel                      # run the formula's test block
+```
+
+## Security
+
+Report vulnerabilities per [SECURITY.md](SECURITY.md)
+(`security@mindburn.org`); do not open public issues.
+
+## License
+
+`helm-ai-kernel` and `helm-ai-enterprise` are distributed under Apache-2.0; see
+each formula and its upstream repository. This tap repository contains only the
+formulae and CI that package those tools.
