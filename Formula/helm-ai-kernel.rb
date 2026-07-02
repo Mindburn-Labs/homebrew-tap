@@ -3,37 +3,38 @@
 class HelmAiKernel < Formula
   desc "Fail-closed execution firewall for AI agents"
   homepage "https://github.com/Mindburn-Labs/helm-ai-kernel"
-  version "0.5.18"
+  version "0.5.20"
   license "Apache-2.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.18/helm-ai-kernel-darwin-arm64"
-      sha256 "5fcd46d1fb6e6998164d7b3bbcce7c7461d78889a9336dbec3e5effb0df7e163"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.20/helm-ai-kernel-darwin-arm64"
+      sha256 "6f9e979beed73feb03c76db487dc0f7223d86b0f8d9a5938ead75b3c8e736f78"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.18/helm-ai-kernel-darwin-amd64"
-      sha256 "9fff4b56bc78f9228c5f4ebdb4a57e91765b0817763e35addddb4e6e9b9adc46"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.20/helm-ai-kernel-darwin-amd64"
+      sha256 "3aa223bbbe64d64f0ef29c3c8fdc5d22008a317396265982213ba2ec2efd1b41"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.18/helm-ai-kernel-linux-arm64"
-      sha256 "c9792403223189d95a6fd66d585ac7c36ae118aa4d6954771c8857ed8da94200"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.20/helm-ai-kernel-linux-arm64"
+      sha256 "164bf2b8eb05e122a25d2263fa11fb7bdf4dd21d8a83dc00b6b2e771c0c5fc1e"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.18/helm-ai-kernel-linux-amd64"
-      sha256 "a0e9ee2ebb6bb01fb190ab4cb901117f3fc71c9204a155a4f1c4f63adced20ff"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.20/helm-ai-kernel-linux-amd64"
+      sha256 "27da325d6b328534db058c9b894d48e32485904a191e2b0faf7f1600735021c2"
     end
   end
 
   resource "launchpad-data" do
-    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.18/helm-ai-kernel-launchpad-data.tar"
+    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.5.20/helm-ai-kernel-launchpad-data.tar"
     sha256 "38de3dbcb9d8f9b945ea120c460f0e5f3c5c98cb7930b250d1d53f38ab688967"
   end
 
   def install
     binary = Dir["helm-ai-kernel-*"].first || "helm-ai-kernel"
     bin.install binary => "helm-ai-kernel"
+
     resource("launchpad-data").stage do
       pkgshare.install "registry"
       pkgshare.install "policies"
