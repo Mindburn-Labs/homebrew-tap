@@ -1,0 +1,20 @@
+name: Docs Truth
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  docs-truth:
+    name: docs-truth
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    uses: Mindburn-Labs/.github/.github/workflows/docs-truth-public.yml@f609d37a5383948eb251a611fd26f531ac178ce4
+    secrets:
+      MINDBURN_ORG_READ_TOKEN: ${{ secrets.MINDBURN_ORG_READ_TOKEN }}
