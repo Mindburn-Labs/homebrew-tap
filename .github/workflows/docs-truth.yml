@@ -15,6 +15,6 @@ jobs:
   docs-truth:
     name: docs-truth
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
-    uses: Mindburn-Labs/.github/.github/workflows/docs-truth-public.yml@f609d37a5383948eb251a611fd26f531ac178ce4
+    uses: Mindburn-Labs/.github/.github/workflows/docs-truth-public.yml@3ce0af631a00853274a42a016977083ff06b619f
     secrets:
       MINDBURN_ORG_READ_TOKEN: ${{ secrets.MINDBURN_ORG_READ_TOKEN }}
