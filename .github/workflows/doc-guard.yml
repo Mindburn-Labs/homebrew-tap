@@ -14,6 +14,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   doc-guard:
     uses: Mindburn-Labs/platform-actions/.github/workflows/doc-fingerprint-guard.yml@abe7bfc2c4b949722e194e43820ed03079bd1913
