@@ -1,13 +1,15 @@
 name: brew test-bot
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test-bot:
+    timeout-minutes: 20
     strategy:
       matrix:
         os: [ macos-15-intel, macos-26 ]
