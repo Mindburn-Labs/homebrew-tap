@@ -2,14 +2,17 @@ name: Continuous Integration
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
   preflight-checks:
+    timeout-minutes: 20
     name: Agent contract and focused gates
     runs-on: ubuntu-latest
     steps:
