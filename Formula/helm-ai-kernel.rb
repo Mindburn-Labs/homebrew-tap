@@ -3,7 +3,6 @@
 class HelmAiKernel < Formula
   desc "Fail-closed execution firewall for AI agents"
   homepage "https://github.com/Mindburn-Labs/helm-ai-kernel"
-  version "0.7.5"
   license "Apache-2.0"
 
   on_macos do
