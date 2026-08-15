@@ -1,7 +1,7 @@
 # typed: false
 # frozen_string_literal: true
 
-# Homebrew formula for Paid HELM AI Enterprise.
+# Homebrew formula for HELM AI OS / Enterprise Control Plane.
 # This is HEAD-only until the first helm-ai-enterprise GitHub release publishes
 # platform binaries and SHA256SUMS.txt.
 
