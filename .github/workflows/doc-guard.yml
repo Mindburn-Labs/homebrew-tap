@@ -51,4 +51,28 @@ jobs:
             echo "$hits"
             exit 1
           fi
+
+          # The Kernel formula is public-install truth. Scan tracked active
+          # Markdown for the two forms that bypass the canonical coordinate;
+          # only explicitly historical paths are excluded.
+          install_hits="$(
+            git ls-files -- '*.md' |
+              while IFS= read -r file; do
+                case "$file" in
+                  docs/archive/*|docs/historical/*|docs/audit/*|CHANGELOG.md) continue ;;
+                esac
+                grep -nE -i 'brew[[:space:]]+install([[:space:]]+--[[:alnum:]-]+)*[[:space:]]+(helm-ai-kernel|mindburnlabs/tap/helm-ai-kernel)([^[:alnum:]_-]|$)' "$file" \
+                  | sed "s#^#${file}:#" || true
+              done
+          )"
+          if [ -n "$install_hits" ]; then
+            echo "::error::Non-canonical HELM AI Kernel Homebrew install found in tracked Markdown:"
+            echo "$install_hits"
+            exit 1
+          fi
+
+          if ! grep -qE 'brew[[:space:]]+install[[:space:]]+mindburn-labs/tap/helm-ai-kernel([^[:alnum:]_-]|$)' README.md; then
+            echo "::error::README.md must show brew install mindburn-labs/tap/helm-ai-kernel."
+            exit 1
+          fi
           echo "OK: no banned doc fingerprints."
