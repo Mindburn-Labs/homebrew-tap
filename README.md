@@ -9,12 +9,12 @@ HELM is a fail-closed execution firewall for AI agents.
 ## Install
 
 ```bash
-brew tap Mindburn-Labs/tap
-brew install helm-ai-kernel
+brew tap mindburn-labs/tap
+brew install mindburn-labs/tap/helm-ai-kernel
 ```
 
-`brew tap Mindburn-Labs/tap` adds this repository (`Mindburn-Labs/homebrew-tap`)
-as a tap; the formulae then resolve as `Mindburn-Labs/tap/<formula>`.
+`brew tap mindburn-labs/tap` adds this repository (`Mindburn-Labs/homebrew-tap`)
+as a tap; the formulae then resolve as `mindburn-labs/tap/<formula>`.
 
 ### Formulae
 
@@ -25,7 +25,7 @@ as a tap; the formulae then resolve as `Mindburn-Labs/tap/<formula>`.
 
 ```bash
 # HELM AI Kernel (open source, Apache-2.0)
-brew install helm-ai-kernel
+brew install mindburn-labs/tap/helm-ai-kernel
 helm-ai-kernel version
 
 # HELM AI Enterprise (builds the latest main branch from source)
@@ -84,9 +84,9 @@ download URLs, and each `sha256` to match the published release artifacts.
 ### Local validation
 
 ```bash
-brew tap Mindburn-Labs/tap
-brew audit --strict --tap Mindburn-Labs/tap   # lint the formulae
-brew install --build-from-source helm-ai-kernel
+brew tap mindburn-labs/tap
+brew audit --strict --tap mindburn-labs/tap   # lint the formulae
+brew install --build-from-source mindburn-labs/tap/helm-ai-kernel
 brew test helm-ai-kernel                      # run the formula's test block
 ```
 
