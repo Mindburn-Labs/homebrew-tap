@@ -1,13 +1,18 @@
 # Agent Operational Guidelines for homebrew-tap
 
-This repository governs the **homebrew-tap** platform component.
+Homebrew tap for the HELM CLIs: `Formula/helm-ai-kernel.rb` (pinned release
+binaries) and `Formula/helm-ai-enterprise.rb` (HEAD-only source build).
 
 ## Dev Commands
-* Setup environment: `make setup`
-* Run test suite: `make test`
-* Run lint checks: `make lint`
-* Build artifacts: `make build`
+* Lint formulae: `brew audit --strict --tap mindburn-labs/tap`
+* Install and test: `brew install --build-from-source mindburn-labs/tap/helm-ai-kernel`,
+  then `brew test helm-ai-kernel`
+* CI runs `brew test-bot` (`tests.yml`). The `make` targets only echo
+  placeholders.
+* A `helm-ai-kernel` bump updates `version`, every release URL, and every
+  `sha256` together.
 
 ## Safety & Geofence Boundaries
 * Zero active static keys committed in this repository.
-* OIDC authentication federated roles strictly required for deployment promotions.
+* The `pr-pull` label triggers `publish.yml`, which publishes bottles and pushes
+  to `main`. That is a package publish: leave the label to a maintainer.
