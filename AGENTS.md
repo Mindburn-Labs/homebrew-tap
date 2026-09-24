@@ -7,8 +7,9 @@ binaries) and `Formula/helm-ai-enterprise.rb` (HEAD-only source build).
 * Lint formulae: `brew audit --strict --tap mindburn-labs/tap`
 * Install and test: `brew install --build-from-source mindburn-labs/tap/helm-ai-kernel`,
   then `brew test helm-ai-kernel`
-* CI runs `brew test-bot` (`tests.yml`). The `make` targets only echo
-  placeholders.
+* `make check` runs `brew style` and `brew audit --strict` on the formulae;
+  CI runs it (`ci.yml`). `tests.yml` also runs `brew test-bot` (tap syntax,
+  install and test on macOS and Linux).
 * A `helm-ai-kernel` bump updates `version`, every release URL, and every
   `sha256` together.
 
