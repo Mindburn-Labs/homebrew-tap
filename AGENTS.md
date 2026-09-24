@@ -15,4 +15,6 @@ binaries) and `Formula/helm-ai-enterprise.rb` (HEAD-only source build).
 ## Safety & Geofence Boundaries
 * Zero active static keys committed in this repository.
 * The `pr-pull` label triggers `publish.yml`, which publishes bottles and pushes
-  to `main`. That is a package publish: leave the label to a maintainer.
+  to `main`. That is a package publish: add it under the `helm-privileged-ops`
+  procedure (pinned formula SHA, then read back the bottles and the `main`
+  push).
