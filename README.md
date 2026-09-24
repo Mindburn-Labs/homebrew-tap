@@ -46,15 +46,15 @@ toolchain (`brew install go`, declared as a build dependency).
 ├── .github/workflows/        # CI: test-bot, pr-pull, agent gates
 │   ├── tests.yml              # brew test-bot (tap syntax, formulae, bottles)
 │   ├── publish.yml            # brew pr-pull (merge bottles on the pr-pull label)
-│   └── ci.yml                 # agent.yaml contract + repository gates
+│   ├── ci.yml                 # CI v2 caller: make check (brew style + audit)
+│   └── ci-v2.yml              # public copy of platform-actions ci.yml@v2
 ├── docs/                     # runbook + ADRs
 ├── observability/            # alert rule definitions
-├── Makefile                  # repo gate targets (setup/test/lint/build)
+├── Makefile                  # make check: brew style + brew audit --strict
 ├── agent.yaml                # agent contract (repo type, owners, commands)
 ├── AGENTS.md                 # agent operational guidelines
 ├── CODEOWNERS                # ownership
-├── SECURITY.md               # vulnerability disclosure
-└── renovate.json             # dependency update config
+└── SECURITY.md               # vulnerability disclosure
 ```
 
 ## Formula maintenance
@@ -77,9 +77,10 @@ download URLs, and each `sha256` to match the published release artifacts.
 - **`publish.yml`** runs `brew pr-pull` when a maintainer adds the `pr-pull`
   label to a PR. It pulls the bottle artifacts, pushes the resulting commits to
   `main`, and deletes the PR branch (for non-fork PRs).
-- **`ci.yml`** validates `agent.yaml` against its canonical keys, enforces that
-  `.codegraph/` is never committed, and runs the available `make` gate targets
-  (`setup`, `lint`, `test`, `build`).
+- **`ci.yml`** calls `ci-v2.yml`, a byte-for-byte copy of
+  `platform-actions` `ci.yml@v2` (a public repository cannot call the internal
+  one). It runs `make check` (`brew style` and `brew audit --strict` on the
+  formulae) and a dependency scan; `ci / gate` is the required check.
 
 ### Local validation
 

@@ -2,14 +2,13 @@ repo_type: svc
 owners:
   team: architecture-platform
 commands:
-  setup: make setup
-  test: make test
-  lint: make lint
-  build: make build
+  check: make check
+  lint: make style
+  test: make audit
 risk:
   external_writes: false
   secrets_required: false
   protected_paths:
     - docs/**
 agent_entrypoints:
-  default_task: make agent-context
+  default_task: make check
