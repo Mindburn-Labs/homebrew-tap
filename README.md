@@ -43,9 +43,8 @@ toolchain (`brew install go`, declared as a build dependency).
 ├── Formula/                  # Homebrew formulae
 │   ├── helm-ai-kernel.rb      # versioned release-binary formula
 │   └── helm-ai-enterprise.rb  # HEAD-only source-build formula
-├── .github/workflows/        # CI: test-bot, pr-pull, agent gates
+├── .github/workflows/        # CI: test-bot and the CI v2 gate
 │   ├── tests.yml              # brew test-bot (tap syntax, formulae, bottles)
-│   ├── publish.yml            # brew pr-pull (merge bottles on the pr-pull label)
 │   ├── ci.yml                 # CI v2 caller: make check (brew style + audit)
 │   └── ci-v2.yml              # public copy of platform-actions ci.yml@v2
 ├── docs/                     # runbook + ADRs
@@ -66,7 +65,7 @@ toolchain (`brew install go`, declared as a build dependency).
 To bump it for a new `helm-ai-kernel` release, update the `version`, the release
 download URLs, and each `sha256` to match the published release artifacts.
 
-### CI and bottle publishing
+### CI and merging
 
 - **`tests.yml`** runs `brew test-bot` on every push and pull request across
   `macos-15-intel`, `macos-26`, and the `ghcr.io/homebrew/brew:main` Ubuntu
@@ -74,13 +73,15 @@ download URLs, and each `sha256` to match the published release artifacts.
   built bottles as artifacts. A PR that touches **only**
   `Formula/helm-ai-enterprise.rb` skips the `brew install` step, because that
   formula is HEAD-only.
-- **`publish.yml`** runs `brew pr-pull` when a maintainer adds the `pr-pull`
-  label to a PR. It pulls the bottle artifacts, pushes the resulting commits to
-  `main`, and deletes the PR branch (for non-fork PRs).
 - **`ci.yml`** calls `ci-v2.yml`, a byte-for-byte copy of
   `platform-actions` `ci.yml@v2` (a public repository cannot call the internal
   one). It runs `make check` (`brew style` and `brew audit --strict` on the
   formulae) and a dependency scan; `ci / gate` is the required check.
+
+Formula PRs merge on a green `ci / gate`; there is no label step. The tap
+publishes no bottles: `helm-ai-kernel` installs prebuilt release binaries and
+`helm-ai-enterprise` builds from HEAD, so a formula change reaches users as soon
+as it lands on `main`.
 
 ### Local validation
 
