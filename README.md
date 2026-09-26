@@ -45,8 +45,7 @@ toolchain (`brew install go`, declared as a build dependency).
 │   └── helm-ai-enterprise.rb  # HEAD-only source-build formula
 ├── .github/workflows/        # CI: test-bot and the CI v2 gate
 │   ├── tests.yml              # brew test-bot (tap syntax, formulae, bottles)
-│   ├── ci.yml                 # CI v2 caller: make check (brew style + audit)
-│   └── ci-v2.yml              # public copy of platform-actions ci.yml@v2
+│   └── ci.yml                 # CI v2 caller: make check (brew style + audit)
 ├── docs/                     # runbook + ADRs
 ├── observability/            # alert rule definitions
 ├── Makefile                  # make check: brew style + brew audit --strict
@@ -73,10 +72,9 @@ download URLs, and each `sha256` to match the published release artifacts.
   built bottles as artifacts. A PR that touches **only**
   `Formula/helm-ai-enterprise.rb` skips the `brew install` step, because that
   formula is HEAD-only.
-- **`ci.yml`** calls `ci-v2.yml`, a byte-for-byte copy of
-  `platform-actions` `ci.yml@v2` (a public repository cannot call the internal
-  one). It runs `make check` (`brew style` and `brew audit --strict` on the
-  formulae) and a dependency scan; `ci / gate` is the required check.
+- **`ci.yml`** calls `platform-actions` `ci.yml@v2`. It runs `make check`
+  (`brew style` and `brew audit --strict` on the formulae) and a dependency
+  scan; `ci / gate` is the required check.
 
 Formula PRs merge on a green `ci / gate`; there is no label step. The tap
 publishes no bottles: `helm-ai-kernel` installs prebuilt release binaries and

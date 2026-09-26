@@ -1,4 +1,4 @@
-# CI runs `make check` (platform-actions ci.yml v2, local public copy ci-v2.yml).
+# CI runs `make check` (platform-actions ci.yml@v2).
 # `brew audit` only takes tap names, so the working tree is linked in as a
 # throwaway tap for the audit and unlinked afterwards.
 AUDIT_TAP := mindburn-labs-check/tap
