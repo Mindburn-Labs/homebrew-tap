@@ -7,27 +7,27 @@ class HelmAiKernel < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.8.4/helm-ai-kernel-darwin-arm64"
-      sha256 "460e6e0e5a92aed03849e075507b1f154229a7eecc94c4ca629dec128c55e32e"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.10.2/helm-ai-kernel-darwin-arm64"
+      sha256 "9587548e74c631c5018374a2ecf9485af9d37b6ad861e08f93445a9a228182aa"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.8.4/helm-ai-kernel-darwin-amd64"
-      sha256 "c0fb0c108c2800f6dc70957a887b4297f5d82a42e4960d170da1ca1679cd0ee6"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.10.2/helm-ai-kernel-darwin-amd64"
+      sha256 "25433f8e7283b5a1825294018eab9311c1fb1b023a1a1da5b7c69f69a84b9bb5"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.8.4/helm-ai-kernel-linux-arm64"
-      sha256 "059c437fc139352ee2081671bed50d08beae73f0e1ab845936d630bb851b9acd"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.10.2/helm-ai-kernel-linux-arm64"
+      sha256 "9ee5a939424897ea1cc7a743eeac67a51c62e0ad4ffb4ed0be4b2161e3b3affe"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.8.4/helm-ai-kernel-linux-amd64"
-      sha256 "4424d4090da4fc94d18f0a7fd398e14ea9cda920e0bd2b19ecb686493af4a673"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.10.2/helm-ai-kernel-linux-amd64"
+      sha256 "b7c41feeca22aace7f3f4c10a1094b9195694f29fb6cf7a89066ac6c5a599973"
     end
   end
 
   resource "launchpad-data" do
-    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.8.4/helm-ai-kernel-launchpad-data.tar"
-    sha256 "38de3dbcb9d8f9b945ea120c460f0e5f3c5c98cb7930b250d1d53f38ab688967"
+    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.10.2/helm-ai-kernel-launchpad-data.tar"
+    sha256 "de9c22c7eb0f0c69dd2c949caa5ac7ffde4a6df917866292552d721c277e2972"
   end
 
   def install
