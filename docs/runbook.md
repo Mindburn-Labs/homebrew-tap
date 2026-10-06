@@ -9,6 +9,7 @@ Pull requests run `brew test-bot` (`tests.yml`) and `make check`
 `helm-ai-kernel` bump merges, check the published formula:
 
 ```bash
+brew trust --formula mindburn-labs/tap/helm-ai-kernel
 brew update
 brew upgrade mindburn-labs/tap/helm-ai-kernel
 brew test helm-ai-kernel      # the formula's test block

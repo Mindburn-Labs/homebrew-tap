@@ -9,12 +9,20 @@ HELM is a fail-closed execution firewall for AI agents.
 ## Install
 
 ```bash
-brew tap mindburn-labs/tap
 brew install mindburn-labs/tap/helm-ai-kernel
 ```
 
-`brew tap mindburn-labs/tap` adds this repository (`Mindburn-Labs/homebrew-tap`)
-as a tap; the formulae then resolve as `mindburn-labs/tap/<formula>`.
+The fully qualified install automatically adds this repository
+(`Mindburn-Labs/homebrew-tap`) as a tap and trusts only `helm-ai-kernel`.
+See [Homebrew Tap Trust](https://docs.brew.sh/Tap-Trust).
+
+To upgrade an existing installation with formula-scoped trust:
+
+```bash
+brew trust --formula mindburn-labs/tap/helm-ai-kernel
+brew update
+brew upgrade mindburn-labs/tap/helm-ai-kernel
+```
 
 ### Formulae
 
@@ -29,7 +37,7 @@ brew install mindburn-labs/tap/helm-ai-kernel
 helm-ai-kernel version
 
 # HELM AI Enterprise (builds the latest main branch from source)
-brew install --HEAD helm-ai-enterprise
+brew install --HEAD mindburn-labs/tap/helm-ai-enterprise
 ```
 
 `helm-ai-enterprise` is HEAD-only until the first `helm-ai-enterprise` GitHub
@@ -85,6 +93,7 @@ as it lands on `main`.
 
 ```bash
 brew tap mindburn-labs/tap
+brew trust --formula mindburn-labs/tap/helm-ai-kernel mindburn-labs/tap/helm-ai-enterprise
 brew audit --strict --tap mindburn-labs/tap   # lint the formulae
 brew install --build-from-source mindburn-labs/tap/helm-ai-kernel
 brew test helm-ai-kernel                      # run the formula's test block
