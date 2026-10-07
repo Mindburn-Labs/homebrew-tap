@@ -20,7 +20,7 @@ jobs:
       contents: read
       actions: read
       pull-requests: read
-    uses: Mindburn-Labs/platform-actions/.github/workflows/ci.yml@v2
+    uses: Mindburn-Labs/platform-actions/.github/workflows/ci.yml@v2.0.1
     with:
       # Homebrew ships on ubuntu-latest but is not on PATH.
       setup-commands: echo /home/linuxbrew/.linuxbrew/bin >> "$GITHUB_PATH"

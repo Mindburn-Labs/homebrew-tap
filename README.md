@@ -80,7 +80,7 @@ download URLs, and each `sha256` to match the published release artifacts.
   built bottles as artifacts. A PR that touches **only**
   `Formula/helm-ai-enterprise.rb` skips the `brew install` step, because that
   formula is HEAD-only.
-- **`ci.yml`** calls `platform-actions` `ci.yml@v2`. It runs `make check`
+- **`ci.yml`** calls `platform-actions` `ci.yml@v2.0.1`. It runs `make check`
   (`brew style` and `brew audit --strict` on the formulae) and a dependency
   scan; `ci / gate` is the required check.
 
