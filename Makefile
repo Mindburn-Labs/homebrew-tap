@@ -15,4 +15,4 @@ style:
 
 audit:
 	@mkdir -p "$(AUDIT_DIR)" && ln -sfn "$(CURDIR)" "$(AUDIT_DIR)/homebrew-tap"
-	@brew audit --strict --tap=$(AUDIT_TAP); status=$$?; rm -rf "$(AUDIT_DIR)"; exit $$status
+	@brew trust $(AUDIT_TAP) && brew audit --strict --tap=$(AUDIT_TAP); status=$$?; rm -rf "$(AUDIT_DIR)"; exit $$status
