@@ -7,26 +7,26 @@ class HelmAiKernel < Formula
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.11.3/helm-ai-kernel-darwin-arm64"
-      sha256 "5d2a11068a0df11f12b88656f67fb3fc881faf044990542e8ced5bfa3f8466b8"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.12.0/helm-ai-kernel-darwin-arm64"
+      sha256 "13d2bdbfce350650a374278523b4ba865724568827ca5db295f9f001bc984a9d"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.11.3/helm-ai-kernel-darwin-amd64"
-      sha256 "bd8a89bbbceda8abe068e821e1239ad23326443641bc50138bbdd80d1f101074"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.12.0/helm-ai-kernel-darwin-amd64"
+      sha256 "f1bf406240c6432db3ac8027a1fe873e4d4aa3fa64b4ecb4203d58141ef9fd18"
     end
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.11.3/helm-ai-kernel-linux-arm64"
-      sha256 "238438d28f8b640db935fe745175830896a03512c0dd818c2c4be0a3df32c2c9"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.12.0/helm-ai-kernel-linux-arm64"
+      sha256 "9150e48049ed068fb9490ab7498a143855a531511a4cdf872165512548e8d180"
     else
-      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.11.3/helm-ai-kernel-linux-amd64"
-      sha256 "c11f50be027d47acc56f740369f3934d16afed528b3a960929f167e7b660d398"
+      url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.12.0/helm-ai-kernel-linux-amd64"
+      sha256 "4ad428ad2f62f1d25364221c6c7e08fa96bf47be5fd0f535484ab3f56a37d1fc"
     end
   end
 
   resource "launchpad-data" do
-    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.11.3/helm-ai-kernel-launchpad-data.tar"
+    url "https://github.com/Mindburn-Labs/helm-ai-kernel/releases/download/v0.12.0/helm-ai-kernel-launchpad-data.tar"
     sha256 "de9c22c7eb0f0c69dd2c949caa5ac7ffde4a6df917866292552d721c277e2972"
   end
 
