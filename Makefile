@@ -10,8 +10,13 @@ check: style audit
 
 .PHONY: check style audit
 
+# `brew style` only applies Homebrew's Formula/ and Taps/ cop exclusions (for
+# example Style/Documentation) to files inside a tap, so a checkout elsewhere,
+# such as a worktree, reports offences CI never sees. Style the formulae
+# through the same throwaway tap link that `audit` uses.
 style:
-	brew style Formula/*.rb
+	@mkdir -p "$(AUDIT_DIR)" && ln -sfn "$(CURDIR)" "$(AUDIT_DIR)/homebrew-tap"
+	@brew style $(AUDIT_TAP); status=$$?; rm -rf "$(AUDIT_DIR)"; exit $$status
 
 audit:
 	@mkdir -p "$(AUDIT_DIR)" && ln -sfn "$(CURDIR)" "$(AUDIT_DIR)/homebrew-tap"
