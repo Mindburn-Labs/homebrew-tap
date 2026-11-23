@@ -1,23 +1,31 @@
-# .github/workflows/ci.yml runs `make check`.
-# `brew audit` only takes tap names, so the working tree is linked in as a
-# throwaway tap for the audit and unlinked afterwards.
-AUDIT_TAP := mindburn-labs-check/tap
-AUDIT_DIR = $(shell brew --repository)/Library/Taps/mindburn-labs-check
+CHECK_TAP := mindburn-labs-check/tap
+STYLE_TAP = brew style $(CHECK_TAP)
+AUDIT_TAP = brew trust $(CHECK_TAP) && brew audit --strict --tap=$(CHECK_TAP)
 
 export HOMEBREW_NO_AUTO_UPDATE := 1
 
-check: style audit
-
 .PHONY: check style audit
 
-# `brew style` only applies Homebrew's Formula/ and Taps/ cop exclusions (for
-# example Style/Documentation) to files inside a tap, so a checkout elsewhere,
-# such as a worktree, reports offences CI never sees. Style the formulae
-# through the same throwaway tap link that `audit` uses.
+# Homebrew applies tap-specific style rules and audit checks to a linked checkout.
+define with_check_tap
+	@set -e; \
+	repository=$$(brew --repository); \
+	test -n "$$repository"; \
+	tap_dir="$$repository/Library/Taps/mindburn-labs-check"; \
+	tap_link="$$tap_dir/homebrew-tap"; \
+	mkdir -p "$$repository/Library/Taps"; \
+	mkdir "$$tap_dir"; \
+	trap 'if [ -L "$$tap_link" ]; then unlink "$$tap_link"; fi; rmdir "$$tap_dir"' EXIT; \
+	trap 'exit 1' HUP INT TERM; \
+	ln -s "$(CURDIR)" "$$tap_link"; \
+	$(1)
+endef
+
+check:
+	$(call with_check_tap,$(STYLE_TAP) && $(AUDIT_TAP))
+
 style:
-	@mkdir -p "$(AUDIT_DIR)" && ln -sfn "$(CURDIR)" "$(AUDIT_DIR)/homebrew-tap"
-	@brew style $(AUDIT_TAP); status=$$?; rm -rf "$(AUDIT_DIR)"; exit $$status
+	$(call with_check_tap,$(STYLE_TAP))
 
 audit:
-	@mkdir -p "$(AUDIT_DIR)" && ln -sfn "$(CURDIR)" "$(AUDIT_DIR)/homebrew-tap"
-	@brew trust $(AUDIT_TAP) && brew audit --strict --tap=$(AUDIT_TAP); status=$$?; rm -rf "$(AUDIT_DIR)"; exit $$status
+	$(call with_check_tap,$(AUDIT_TAP))
