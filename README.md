@@ -1,111 +1,40 @@
-# homebrew-tap
+# Mindburn Labs Homebrew tap
 
-Homebrew tap for [Mindburn Labs](https://mindburn.org) HELM command-line tools.
-Provides formulae to install the HELM AI Kernel and HELM AI Enterprise binaries
-via `brew`.
+Install the open-source [HELM AI Kernel](https://github.com/Mindburn-Labs/helm-ai-kernel)
+on macOS or Linux. Homebrew downloads the release binary for your ARM64 or
+x86-64 machine.
 
-HELM is a fail-closed execution firewall for AI agents.
-
-## Install
-
-```bash
-brew install mindburn-labs/tap/helm-ai-kernel
-```
-
-The fully qualified install automatically adds this repository
-(`Mindburn-Labs/homebrew-tap`) as a tap and trusts only `helm-ai-kernel`.
-See [Homebrew Tap Trust](https://docs.brew.sh/Tap-Trust).
-
-To upgrade an existing installation with formula-scoped trust:
-
-```bash
-brew trust --formula mindburn-labs/tap/helm-ai-kernel
-brew update
-brew upgrade mindburn-labs/tap/helm-ai-kernel
-```
-
-### Formulae
-
-| Formula | Source repo | Install kind |
-| --- | --- | --- |
-| `helm-ai-kernel` | [`Mindburn-Labs/helm-ai-kernel`](https://github.com/Mindburn-Labs/helm-ai-kernel) | Versioned — downloads the prebuilt release binary for your platform (macOS/Linux, arm64/amd64) |
-| `helm-ai-enterprise` | [`Mindburn-Labs/helm-ai-enterprise`](https://github.com/Mindburn-Labs/helm-ai-enterprise) | HEAD-only — builds from source with the Go toolchain (`go build ./apps/helm-ai-enterprise`) |
-
-```bash
-# HELM AI Kernel (open source, Apache-2.0)
+```sh
 brew install mindburn-labs/tap/helm-ai-kernel
 helm-ai-kernel version
+```
 
-# HELM AI Enterprise (builds the latest main branch from source)
+The fully qualified command adds this tap and grants trust to this formula.
+For an existing tap that requires formula trust before upgrading, run
+`brew trust --formula mindburn-labs/tap/helm-ai-kernel`. See
+[Homebrew Tap Trust](https://docs.brew.sh/Tap-Trust).
+
+## Enterprise source build
+
+If you can clone the private
+[HELM AI Enterprise repository](https://github.com/Mindburn-Labs/helm-ai-enterprise),
+use the HEAD formula to build its `main` branch. Homebrew installs Go as a
+build dependency.
+
+```sh
 brew install --HEAD mindburn-labs/tap/helm-ai-enterprise
 ```
 
-`helm-ai-enterprise` is HEAD-only until the first `helm-ai-enterprise` GitHub
-release publishes platform binaries and `SHA256SUMS.txt`; it requires a Go build
-toolchain (`brew install go`, declared as a build dependency).
+## Maintain the tap
 
-## Repository layout
+When updating [`helm-ai-kernel`](Formula/helm-ai-kernel.rb), use one published
+release for the four platform binaries and the `launchpad-data` archive.
+Update every URL and its SHA-256 together.
 
-```text
-.
-├── Formula/                  # Homebrew formulae
-│   ├── helm-ai-kernel.rb      # versioned release-binary formula
-│   └── helm-ai-enterprise.rb  # HEAD-only source-build formula
-├── .github/workflows/        # CI: test-bot and the CI v2 gate
-│   ├── tests.yml              # brew test-bot (tap syntax, formulae, bottles)
-│   └── ci.yml                 # CI v2 caller: make check (brew style + audit)
-├── docs/                     # runbook + ADRs
-├── observability/            # alert rule definitions
-├── Makefile                  # make check: brew style + brew audit --strict
-├── agent.yaml                # agent contract (repo type, owners, commands)
-├── AGENTS.md                 # agent operational guidelines
-├── CODEOWNERS                # ownership
-└── SECURITY.md               # vulnerability disclosure
-```
+Run `make check` with Homebrew installed. The [required CI gate](.github/workflows/ci.yml)
+runs style and strict formula audit. On pull requests, [Homebrew test-bot](.github/workflows/tests.yml)
+checks tap syntax and tests installable formula changes on macOS and Linux.
+Enterprise-only formula changes get the syntax check because the source is private.
 
-## Formula maintenance
-
-### Updating `helm-ai-kernel`
-
-`Formula/helm-ai-kernel.rb` pins a `version` and four release-binary `url` +
-`sha256` pairs (macOS/Linux × arm64/amd64), plus a `launchpad-data` resource.
-To bump it for a new `helm-ai-kernel` release, update the `version`, the release
-download URLs, and each `sha256` to match the published release artifacts.
-
-### CI and merging
-
-- **`tests.yml`** runs `brew test-bot` on every push and pull request across
-  `macos-15-intel`, `macos-26`, and the `ghcr.io/homebrew/brew:main` Ubuntu
-  container. It runs `--only-tap-syntax` and `--only-formulae`, and uploads the
-  built bottles as artifacts. A PR that touches **only**
-  `Formula/helm-ai-enterprise.rb` skips the `brew install` step, because that
-  formula is HEAD-only.
-- **`ci.yml`** calls `platform-actions` `ci.yml@v2.0.1`. It runs `make check`
-  (`brew style` and `brew audit --strict` on the formulae) and a dependency
-  scan; `ci / gate` is the required check.
-
-Formula PRs merge on a green `ci / gate`; there is no label step. The tap
-publishes no bottles: `helm-ai-kernel` installs prebuilt release binaries and
-`helm-ai-enterprise` builds from HEAD, so a formula change reaches users as soon
-as it lands on `main`.
-
-### Local validation
-
-```bash
-brew tap mindburn-labs/tap
-brew trust --formula mindburn-labs/tap/helm-ai-kernel mindburn-labs/tap/helm-ai-enterprise
-brew audit --strict --tap mindburn-labs/tap   # lint the formulae
-brew install --build-from-source mindburn-labs/tap/helm-ai-kernel
-brew test helm-ai-kernel                      # run the formula's test block
-```
-
-## Security
-
-Report vulnerabilities per [SECURITY.md](SECURITY.md)
-(`security@mindburn.org`); do not open public issues.
-
-## License
-
-`helm-ai-kernel` and `helm-ai-enterprise` are distributed under Apache-2.0; see
-each formula and its upstream repository. This tap repository contains only the
-formulae and CI that package those tools.
+See the [runbook](docs/runbook.md) to verify a formula update or revert a bad one.
+Report vulnerabilities through the [security policy](SECURITY.md).

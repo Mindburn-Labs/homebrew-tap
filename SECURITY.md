@@ -1,7 +1,4 @@
-# Security Policy
+# Security
 
-## Supported Versions
-Only the latest released tag of **homebrew-tap** is actively supported.
-
-## Reporting a Vulnerability
-Email security reports directly to `security@mindburn.org`. Do not open public issues.
+Report suspected vulnerabilities privately to [security@mindburn.org](mailto:security@mindburn.org).
+Include the formula, the installed version or source commit, and the affected platform.
