@@ -17,8 +17,7 @@ helm-ai-kernel version        # prints the new version
 ```
 
 ## Recovery Procedures
-Revert the bad formula commit on `main` through a pull request. For a
-`helm-ai-kernel` bump the revert restores the release URLs and checksums for
-all platform binaries and the `launchpad-data` archive together. Machines that already installed the bad version
-get the reverted formula with `brew update` and
+Revert the bad formula commit on `main` through a pull request. The revert
+restores the previous release URLs, checksums, resources, and test block.
+Machines that installed the bad version can run `brew update` and
 `brew reinstall mindburn-labs/tap/helm-ai-kernel`.
