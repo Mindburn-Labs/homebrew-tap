@@ -27,9 +27,11 @@ brew install --HEAD mindburn-labs/tap/helm-ai-enterprise
 
 ## Maintain the tap
 
-When updating [`helm-ai-kernel`](Formula/helm-ai-kernel.rb), use one published
-release for the four platform binaries and the `launchpad-data` archive.
-Update every URL and its SHA-256 together.
+When updating [`helm-ai-kernel`](Formula/helm-ai-kernel.rb), take the four
+platform binaries and their checksums from the same published release. The
+current formula also installs the `launchpad-data` archive from v0.12.0. Update
+the formula and its tests to match the assets and commands in the release you
+pin.
 
 Run `make check` with Homebrew installed. The [required CI gate](.github/workflows/ci.yml)
 runs style and strict formula audit. On pull requests, [Homebrew test-bot](.github/workflows/tests.yml)
